@@ -1,0 +1,10 @@
+node_modules
+.git
+.gitignore
+README.md
+deploy.sh
+nginx.conf.example
+.dockerignore
+Dockerfile
+docker-compose.yml
+
