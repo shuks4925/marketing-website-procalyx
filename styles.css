@@ -13,32 +13,62 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 97vw;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 40px;
     min-height: 100vh;
     position: relative;
     z-index: 1;
+    width: 100%;
+}
+
+@media (min-width: 769px) {
+    .container {
+        padding: 20px 30px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 20px 40px;
+    }
 }
 
 /* Header */
 .header {
     display: flex;
     justify-content: flex-end;
-    padding: 20px 0;
+    align-items: center;
+    padding: 1.25rem 0;
+    padding-right: 1.25rem;
+    width: 100%;
+}
+
+@media (min-width: 769px) {
+    .header {
+        padding: 0.625rem 0;
+        padding-right: 1.875rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header {
+        padding-right: 2.5rem;
+    }
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 .logo-image {
-    height: 48px;
+    height: 3rem;
     width: auto;
     object-fit: contain;
     display: block;
+    max-width: 100%;
 }
 
 .logo-name {
@@ -68,12 +98,26 @@ body {
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 200px);
-    padding: 40px 20px;
+    padding: 40px 0;
     text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+    .main-content {
+        padding: 60px 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main-content {
+        padding: 80px 0;
+    }
 }
 
 .main-heading {
-    font-size: 64px;
+    font-size: 50px;
     font-weight: 700;
     color: #1E3A5F;
     margin-bottom: 16px;
@@ -92,6 +136,13 @@ body {
     width: 100%;
     max-width: 480px;
     margin-bottom: 40px;
+    padding: 0;
+}
+
+@media (min-width: 769px) {
+    .form-section {
+        max-width: 520px;
+    }
 }
 
 .form-label {
@@ -114,14 +165,14 @@ body {
 
 .mail-icon {
     position: absolute;
-    left: 16px;
+    left: 18px;
     color: #9CA3AF;
     z-index: 1;
 }
 
 .email-input {
     width: 100%;
-    padding: 14px 16px 14px 48px;
+    padding: 18px 20px 18px 52px;
     border: 1px solid #D1D5DB;
     border-radius: 8px;
     font-size: 16px;
@@ -140,8 +191,8 @@ body {
 }
 
 .notify-btn {
-    padding: 14px 32px;
-    background: linear-gradient(180deg, #1E3A5F 0%, #152A47 100%);
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #1E3A5F 0%, #2A4A6F 50%, #152A47 100%);
     color: white;
     border: none;
     border-radius: 8px;
@@ -149,6 +200,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(30, 58, 95, 0.2);
 }
 
 .notify-btn:hover {
@@ -192,9 +244,11 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.social-icon svg {
-    width: 20px;
-    height: 20px;
+.social-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 /* Copyright */
@@ -206,15 +260,23 @@ body {
 /* Background Logo */
 .bg-logo {
     position: fixed;
-    bottom: -100px;
-    left: -50px;
-    font-size: 600px;
-    font-weight: 700;
-    color: rgba(30, 58, 95, 0.03);
+    bottom: 0;
+    left: 0;
     z-index: 0;
     pointer-events: none;
     user-select: none;
-    line-height: 1;
+    width: 60vw;
+    max-width: 817px;
+    height: auto;
+    opacity: 1;
+    overflow: visible;
+}
+
+.bg-logo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 1;
 }
 
 /* Success/Error Messages */
@@ -240,51 +302,102 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
     .main-heading {
         font-size: 48px;
+        margin-bottom: 12px;
     }
 
     .subheading {
         font-size: 20px;
+        margin-bottom: 36px;
     }
 
     .form-section {
         max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .email-input {
+        padding: 16px 18px 16px 48px;
+    }
+
+    .mail-icon {
+        width: 18px;
+        height: 18px;
+        left: 16px;
     }
 
     .logo-image {
-        height: 40px;
+        height: 2.5rem;
+    }
+
+    .header {
+        padding: 0.9375rem 0;
+        padding-right: 0.9375rem;
+    }
+
+    .main-content {
+        padding: 30px 15px;
+        min-height: calc(100vh - 150px);
     }
 
     .bg-logo {
-        font-size: 400px;
-        bottom: -80px;
-        left: -30px;
+        width: 80vw;
+        max-width: 600px;
+        bottom: 0;
+        left: 0;
     }
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
     .main-heading {
         font-size: 36px;
+        margin-bottom: 10px;
+        line-height: 1.2;
     }
 
     .subheading {
         font-size: 18px;
         margin-bottom: 32px;
+        line-height: 1.4;
     }
 
     .form-label {
         font-size: 14px;
+        margin-bottom: 12px;
     }
 
-    .email-input,
+    .email-input {
+        font-size: 14px;
+        padding: 16px 18px 16px 48px;
+    }
+
     .notify-btn {
         font-size: 14px;
-        padding: 12px 16px;
+        padding: 16px 24px;
+    }
+
+    .mail-icon {
+        width: 18px;
+        height: 18px;
+        left: 16px;
+    }
+
+    .email-form {
+        gap: 12px;
     }
 
     .social-links {
         gap: 12px;
+        margin-bottom: 24px;
     }
 
     .social-icon {
@@ -292,15 +405,29 @@ body {
         height: 40px;
     }
 
-    .social-icon svg {
-        width: 18px;
-        height: 18px;
+    .header {
+        padding: 0.9375rem 0 0.625rem 0;
+        padding-right: 0.625rem;
+    }
+
+    .logo-image {
+        height: 2.25rem;
+    }
+
+    .main-content {
+        padding: 20px 10px;
+        min-height: calc(100vh - 120px);
+    }
+
+    .copyright {
+        font-size: 12px;
     }
 
     .bg-logo {
-        font-size: 300px;
-        bottom: -60px;
-        left: -20px;
+        width: 100vw;
+        max-width: 400px;
+        bottom: 0;
+        left: 0;
     }
 }
 

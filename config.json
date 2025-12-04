@@ -1,0 +1,12 @@
+{
+  "socialMedia": {
+    "enabled": true,
+    "links": {
+      "facebook": "https://www.facebook.com/procalyx",
+      "twitter": "https://twitter.com/procalyx",
+      "linkedin": "https://www.linkedin.com/company/procalyx",
+      "whatsapp": "https://wa.me/1234567890"
+    }
+  }
+}
+

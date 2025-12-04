@@ -1,7 +1,62 @@
 // PROCALYX API endpoint
 const API_ENDPOINT = 'https://api.procalyx.com/api/v1/notify-me';
 
-document.addEventListener('DOMContentLoaded', function() {
+// Social media configuration
+let socialConfig = {
+    enabled: false,
+    links: {}
+};
+
+// Load social media configuration
+async function loadSocialConfig() {
+    try {
+        const response = await fetch('./config.json');
+        if (response.ok) {
+            const config = await response.json();
+            socialConfig = config.socialMedia || socialConfig;
+        } else {
+            console.warn('Failed to load config.json, social media links disabled');
+        }
+    } catch (error) {
+        console.error('Error loading social media config:', error);
+    }
+}
+
+// Initialize social media links
+function initializeSocialLinks() {
+    const socialIcons = document.querySelectorAll('.social-icon[data-social]');
+    
+    socialIcons.forEach(icon => {
+        const socialType = icon.getAttribute('data-social');
+        const url = socialConfig.links[socialType];
+        
+        if (url) {
+            icon.href = url;
+        }
+        
+        // Add click handler
+        icon.addEventListener('click', function(e) {
+            if (!socialConfig.enabled) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // If URL is not set, prevent navigation
+            if (!url) {
+                e.preventDefault();
+                console.warn(`No URL configured for ${socialType}`);
+                return false;
+            }
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+    // Load social media configuration
+    await loadSocialConfig();
+    
+    // Initialize social media links
+    initializeSocialLinks();
     const form = document.getElementById('emailForm');
     const emailInput = document.getElementById('emailInput');
     const notifyBtn = form.querySelector('.notify-btn');
@@ -69,23 +124,47 @@ document.addEventListener('DOMContentLoaded', function() {
                     email: email
                 });
             } else {
-                throw new Error(result.message || 'Submission failed');
+                // Handle specific API error responses
+                if (result.error) {
+                    const errorType = result.error.type || result.error.code;
+                    const errorMessage = result.error.message || result.message || 'Submission failed';
+                    
+                    // Handle duplicate email error (409 Conflict)
+                    if (errorType === 'DUPLICATE_EMAIL' || response.status === 409) {
+                        showMessage('This email is already subscribed. We\'ll notify you when we launch!', 'error');
+                        emailInput.value = '';
+                    } else {
+                        // Handle other specific errors
+                        showMessage(errorMessage, 'error');
+                    }
+                } else {
+                    // Generic error message
+                    showMessage(result.message || 'Submission failed. Please try again.', 'error');
+                }
+                return; // Don't proceed to catch block for API errors
             }
         } catch (error) {
             console.error('Error submitting form:', error);
             
-            // Fallback: Store in localStorage if API fails
-            try {
-                const submissions = JSON.parse(localStorage.getItem('procalyx_submissions') || '[]');
-                submissions.push({
-                    email: email
-                });
-                localStorage.setItem('procalyx_submissions', JSON.stringify(submissions));
-                
-                showMessage('Thank you! We\'ll notify you soon.', 'success');
-                emailInput.value = '';
-                console.log('Email saved locally:', { email });
-            } catch (localError) {
+            // Only fallback to localStorage for network/connection errors
+            // Not for business logic errors (like duplicate emails)
+            if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                // Network error - fallback to localStorage
+                try {
+                    const submissions = JSON.parse(localStorage.getItem('procalyx_submissions') || '[]');
+                    submissions.push({
+                        email: email
+                    });
+                    localStorage.setItem('procalyx_submissions', JSON.stringify(submissions));
+                    
+                    showMessage('Thank you! We\'ll notify you soon.', 'success');
+                    emailInput.value = '';
+                    console.log('Email saved locally:', { email });
+                } catch (localError) {
+                    showMessage('Network error. Please check your connection and try again.', 'error');
+                }
+            } else {
+                // Other errors (parsing, etc.)
                 showMessage('Something went wrong. Please try again later.', 'error');
             }
         } finally {
