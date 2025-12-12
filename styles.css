@@ -257,6 +257,33 @@ body {
     color: #4B5563;
 }
 
+/* Legal Links */
+.legal-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 32px;
+}
+
+.legal-link {
+    font-size: 14px;
+    color: #2563EB;
+    text-decoration: none;
+    transition: color 0.2s;
+    padding: 0 8px;
+}
+
+.legal-link:hover {
+    color: #1E3A5F;
+    text-decoration: underline;
+}
+
+.legal-separator {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
 /* Background Logo */
 .bg-logo {
     position: fixed;
@@ -420,6 +447,20 @@ body {
     }
 
     .copyright {
+        font-size: 12px;
+    }
+
+    .legal-links {
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    .legal-link {
+        font-size: 12px;
+        padding: 0 6px;
+    }
+
+    .legal-separator {
         font-size: 12px;
     }
 
