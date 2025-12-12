@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 # Copy website files to nginx html directory
-COPY index.html styles.css script.js Procalyx.png config.json /usr/share/nginx/html/
+COPY index.html terms.html privacy.html styles.css script.js Procalyx.png config.json /usr/share/nginx/html/
 
 # Copy assets directory
 COPY assets/ /usr/share/nginx/html/assets/
